@@ -1,0 +1,83 @@
+-----------------------------------------------------------------------------
+Inversion of Control (IoC) Container – Spring Boot Notes
+-----------------------------------------------------------------------------
+
+• Inversion of Control (IoC) means that the responsibility of creating and 
+  managing objects is transferred from the application code to the Spring 
+  framework.
+
+• In Spring Boot, the IoC container is responsible for:
+  - Creating objects (called beans)
+  - Managing their dependencies
+  - Injecting dependencies where required
+  - Managing the lifecycle of beans
+
+-----------------------------------------------------------------------------
+IoC Container in Spring
+-----------------------------------------------------------------------------
+
+• Spring uses ApplicationContext as the primary implementation of the IoC 
+  container.
+
+• When a Spring Boot application starts, the @SpringBootApplication annotation:
+  - Triggers component scanning
+  - Scans the package where it is declared and all its sub-packages
+  - Detects classes annotated with:
+        @Component
+        @Service
+        @Repository
+        @Controller / @RestController
+
+• These detected classes are instantiated and registered as beans inside the 
+  ApplicationContext.
+
+-----------------------------------------------------------------------------
+Dependency Injection (DI)
+-----------------------------------------------------------------------------
+
+• Dependency Injection is the mechanism through which the IoC container provides 
+  required dependencies to a class.
+
+• Instead of creating objects using the `new` keyword, classes declare their 
+  dependencies, and Spring injects them automatically.
+
+• Constructor injection is the preferred approach:
+
+  - It makes dependencies explicit
+  - It improves testability
+  - It ensures immutability of required dependencies
+
+• Example:
+  
+  A class does NOT create its dependency.
+  It only declares what it needs.
+
+-----------------------------------------------------------------------------
+Loose Coupling
+-----------------------------------------------------------------------------
+
+• IoC and DI help achieve loose coupling because:
+  - Classes depend on abstractions (interfaces), not concrete implementations
+  - Object creation logic is removed from business logic
+  - Implementations can be changed without modifying dependent classes
+  - Code becomes easier to test, maintain, and extend
+
+-----------------------------------------------------------------------------
+Key Summary
+-----------------------------------------------------------------------------
+
+• IoC = Spring controls object creation and lifecycle
+• DI = Spring injects required dependencies
+• ApplicationContext = IoC container
+• @SpringBootApplication = enables component scanning
+• No manual object creation using `new`
+• Results in clean, modular, loosely coupled code
+
+
+You’re now ready for:
+1. Bean lifecycle
+2. Two beans talking to each other
+3. Constructor injection (no @Autowired yet)
+4. Singleton vs Prototype scope
+5. Why beans are created at startup
+6. What happens if Spring cannot create a bean

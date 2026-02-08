@@ -1,0 +1,84 @@
+-----------------------------------------------------------------------------
+Original POM.xml
+-----------------------------------------------------------------------------
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>abyss.hadal</groupId>
+  <artifactId>sunken-boat</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>sunken-boat</name>
+<!--  <url>http://maven.apache.org</url>-->
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    <!-- Source: https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.18.38</version>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
+</project>
+
+-----------------------------------------------------------------------------
+Meaning in table format
+-----------------------------------------------------------------------------
+
+## `pom.xml` – Key Information Table
+
+| Property / Key                 | Value                     | Meaning / Description                                     |
+| ------------------------------ | ------------------------- | --------------------------------------------------------- |
+| `modelVersion`                 | `4.0.0`                   | Version of the Maven POM model. Almost always `4.0.0`.    |
+| `groupId`                      | `abyss.hadal`             | Organization / owner of the project. Used for uniqueness. |
+| `artifactId`                   | `sunken-boat`             | Project name. Also used as the JAR file name.             |
+| `version`                      | `1.0-SNAPSHOT`            | Project version. `SNAPSHOT` means under development.      |
+| `packaging`                    | `jar`                     | Type of output artifact (jar, war, etc.).                 |
+| `name`                         | `sunken-boat`             | Human-readable project name (documentation purpose).      |
+| `url`                          | `http://maven.apache.org` | Project homepage (optional, informational).               |
+| `project.build.sourceEncoding` | `UTF-8`                   | Encoding used to read Java source files.                  |
+
+-----------------------------------------------------------------------------
+
+## Dependencies Section
+
+| Dependency | GroupId             | ArtifactId | Version   | Scope     | Meaning                                                            |
+| ---------- | ------------------- | ---------- | --------- | --------- | ------------------------------------------------------------------ |
+| JUnit      | `junit`             | `junit`    | `3.8.1`   | `test`    | Used only for running tests, not included in final JAR.            |
+| Lombok     | `org.projectlombok` | `lombok`   | `1.18.38` | `compile` | Used during compilation to generate code (getters, setters, etc.). |
+
+-----------------------------------------------------------------------------
+
+## Dependency Scope Meanings (Quick Reference)
+
+| Scope      | Meaning                                                        |
+| ---------- | -------------------------------------------------------------- |
+| `compile`  | Available in main code and during compilation (default scope). |
+| `test`     | Available only while running tests.                            |
+| `runtime`  | Needed only at runtime, not during compilation.                |
+| `provided` | Provided by runtime environment (e.g., server).                |
+
+-----------------------------------------------------------------------------
+
+## Derived Information (Not Written Explicitly)
+
+| Derived Item    | Value                                      |
+| --------------- | ------------------------------------------ |
+| Project GAV     | `abyss.hadal : sunken-boat : 1.0-SNAPSHOT` |
+| Output File     | `sunken-boat-1.0-SNAPSHOT.jar`             |
+| Repository Used | Maven Central (default)                    |
+
+-----------------------------------------------------------------------------

@@ -1,0 +1,116 @@
+-----------------------------------------------------------------------------
+What is a Bean?
+-----------------------------------------------------------------------------
+
+• A Bean is a Java object that is created, managed, and destroyed by Spring.
+• Beans live inside the IoC container (ApplicationContext).
+• We do NOT create beans using the `new` keyword.
+• Spring creates beans when the application starts (by default).
+• A class becomes a bean when Spring knows about it, usually by:
+    - @Component
+    - @Service
+    - @Repository
+    - @Controller / @RestController
+
+In short:
+• Bean = Object whose lifecycle is controlled by Spring
+
+-----------------------------------------------------------------------------
+Bean Lifecycle (Simple Mental Model)
+-----------------------------------------------------------------------------
+
+Constructor
+    ↓
+@PostConstruct
+    ↓
+(Application runs, bean methods run only when we call them)
+    ↓
+@PreDestroy
+
+Explanation in simple words:
+• Constructor → object is created
+• @PostConstruct → bean is fully ready to be used
+• Runtime → we call methods as needed
+• @PreDestroy → cleanup before application shuts down
+
+-----------------------------------------------------------------------------
+Simplest Bean Example
+-----------------------------------------------------------------------------
+
+@SpringBootApplication
+public class TwilightApplication {
+
+    public static void main(String[] args) {
+
+        // ApplicationContext (IoC container) is created here
+        ApplicationContext context =
+                SpringApplication.run(TwilightApplication.class, args);
+
+        // We ask Spring for the bean
+        MyFirstBean bean = context.getBean(MyFirstBean.class);
+
+        // We explicitly call a method on the bean
+        System.out.println("Lol " + bean.myMethod());
+    }
+}
+
+@Component
+class MyFirstBean {
+
+    public MyFirstBean() {
+        System.out.println("Bean " +
+                MyFirstBean.class.getSimpleName() + " created");
+    }
+
+    @PostConstruct
+    public void init() {
+        System.out.println("Bean fully initialized");
+    }
+
+    public String myMethod() {
+        return "My little pony!";
+    }
+
+    @PreDestroy
+    public void destroy() {
+        System.out.println("Bean is about to destroy!");
+    }
+}
+
+-----------------------------------------------------------------------------
+Example Explained (Step-by-Step)
+-----------------------------------------------------------------------------
+
+1. Application starts using SpringApplication.run()
+   → IoC container (ApplicationContext) is created
+
+2. Spring scans packages and finds MyFirstBean (@Component)
+
+3. Bean lifecycle begins:
+   • Constructor runs
+   • Dependencies (if any) are injected
+   • @PostConstruct runs
+
+4. Application is now running
+   • Bean exists inside the container
+   • Methods run only when we call them explicitly
+
+5. main() asks Spring for the bean using context.getBean()
+
+6. myMethod() is executed and returns a value
+
+7. Application shuts down
+   • @PreDestroy runs
+   • Bean cleanup happens
+
+-----------------------------------------------------------------------------
+Important Takeaways (Lock These In)
+-----------------------------------------------------------------------------
+
+• Spring controls when beans are created and destroyed
+• Constructor + @PostConstruct + @PreDestroy are automatic
+• Other methods run only when WE call them
+• Beans are singletons by default
+• Passing beans via constructor is how beans talk to each other
+
+-----------------------------------------------------------------------------

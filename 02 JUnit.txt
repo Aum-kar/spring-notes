@@ -1,0 +1,99 @@
+-----------------------------------------------------------------------------
+How to Test?
+-----------------------------------------------------------------------------
+- To define a test, find \src\test\AppTest.java
+- Create a testMethod(), annotate it with @Test
+- Test code goes inside this method body
+- Now, get your methods()/business logic compare them with actual values
+- Remember we don't call psv main() for test cases.
+
+-----------------------------------------------------------------------------
+Basic Testing Methods
+-----------------------------------------------------------------------------
+1.  assertEquals(T expected, T actual, tolerance)
+    assertNotEquals(expected, actual)
+2.  assertThrows(Exception.class, () -> {method()});
+3.  assertTrue(logicalExpression)
+    assertFalse(logicalExpression);
+4.  assertNotNull
+    assertNull(obj);
+5.  assertArrayEquals(expected, actual);
+6.  assertAll(()->{}, ()->{},...);
+7.  fail()
+
+-----------------------------------------------------------------------------
+Example
+-----------------------------------------------------------------------------
+package com.mycompany.app;
+
+public class Calci {
+    public static double divide(double num1, double num2) {
+        return num1/num2;
+    }
+}
+
+---
+package com.mycompany.app;
+
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class CalciTest {
+    /* Basic test case, compares expected with actual value.
+        While dealing with double data type, it is important to allow
+        tolerance. tolerance or delta can be calculated as
+        | Expected - Actual | < Delta
+        This is optional parameter.*/
+    @Test
+    public void verifyPi() {
+        double result = Calci.divide(22, 7);
+        assertEquals(3.141593, result, 0.01);
+    }
+
+    // Example test case for method which is expected to throw valid error 
+    @Test
+    public void testZero() {
+        assertThrows(IllegalArgumentException.class, () -> App.divider(12, 0));
+    }
+}
+
+-----------------------------------------------------------------------------
+How to Read Test Case Failures?
+-----------------------------------------------------------------------------
+
+1. Run tests using:
+   mvn test
+
+2. If tests fail, scroll to the bottom of the output.
+
+3. Look for the failure summary:
+   - Test class name
+   - Test method name
+   - Expected value
+   - Actual value
+
+   Example:
+   expected:<10> but was:<8>
+
+4. Open the failing test method first.
+   Tests describe the expected behavior of the code.
+
+5. Understand what the test is expecting:
+   - What input is given?
+   - What result is expected?
+   - Is an exception expected?
+
+6. Only after understanding the test, open your method.
+   Compare your logic with the test’s expectation.
+
+7. Use stack trace lines with your class name
+   to find the exact file and line number.
+
+8. Ignore framework and library classes
+   (JUnit, ArrayList, reflection, etc.).
+
+Key idea:
+Tests tell *what* behavior is expected,
+not *how* to write the code.
+
+-----------------------------------------------------------------------------

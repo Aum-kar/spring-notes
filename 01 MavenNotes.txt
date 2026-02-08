@@ -1,0 +1,86 @@
+-----------------------------------------------------------------------------
+What is Maven?
+-----------------------------------------------------------------------------
+Maven is a build tool, dependency manager and project structure enforcer
+
+What does maven do?
+- Dependency manager	– downloads libraries for you
+- Build tool			– compiles, tests, packages your code
+- Project standardizer	– everyone’s Java project looks the same
+
+Without Maven, you’d be:
+- Downloading JARs manually
+- Adding them to classpath yourself
+- Writing long javac and java commands
+
+-----------------------------------------------------------------------------
+Command to generate basic Maven project
+-----------------------------------------------------------------------------
+mvn archetype:generate 
+	-DgroupId=com.mycompany.app 
+	-DartifactId=my-app 
+	-DarchetypeArtifactId=maven-archetype-quickstart 
+	-DarchetypeVersion=1.5
+	-DinteractiveMode=false
+
+In this command, `-D` means define a property, i.e., `-Dkey=value`
+
+GroupId					-	Owner of the project
+ArtifactId				-	Project name, it becomes .jar file name after 
+							build i.e., artifactid-version.jar
+DarchetypeArtifactId	- 	Maven provides different templates as per 
+							project requirements, quickstart is most basic.
+
+-----------------------------------------------------------------------------
+Basic Maven Commands
+-----------------------------------------------------------------------------
+1. mvn compile	- Compiles code, generated class stored in \target\classes
+2. mvn test		- Runs test cases from `\src\test\...`
+3. mvn package	- Creates JAR file
+4. mvn clean 	- Delete \target directory.
+
+-----------------------------------------------------------------------------
+Maven Lifecycle
+-----------------------------------------------------------------------------
+- Their are three Maven Lifecycles
+	- Default lifecycle		(build code),
+	- Clean lifecycle		(remove old output)
+	- site lifecycle		(documentation)
+
+Default lifecycle:
+	- When you run mvn package, maven validates, compiles, tests and then packages the code.
+	Lifecycle:   Validate 		> Compile 		> Test 		> Package 		> Verify 	> Install 	> Deploy
+	Command:	 mvn validate	  mvn compile	  mvn Test	  mvn package	  ...yet to be discovered
+	- Running a phase runs all previous phases in the lifecycle. 
+	- So, running mvn compile actually does mvn validate + mvn validate + mvn compile
+
+Clean lifecycle:
+	pre-clean > Clean 		> post-clean
+				mvn clean
+
+Site lifecycle:
+	pre-site > Site > post-site > site-deploy
+
+-----------------------------------------------------------------------------
+Difference between Java Package and Maven GroupId
+-----------------------------------------------------------------------------
+They look similar because of convention but are completely different.
+| Concept       | Belongs to | Purpose           |
+| ------------- | ---------- | ----------------- |
+| `package`     | Java       | Organize code     |
+| `groupId`     | Maven      | Identify artifact |
+| Similar names | Convention | Human sanity      |
+
+-----------------------------------------------------------------------------
+How can I run my project?
+-----------------------------------------------------------------------------
+- Maven does not include any built-in command to run Java code by default.
+- Once you run `mvn compile`, use java command `java -cp target\classes 
+  package.MainClass` to run.
+- This command is valid for maven-archetype-quickstart template, verify 
+  before running.
+
+-----------------------------------------------------------------------------
+Maven Dependencies.
+-----------------------------------------------------------------------------
+Maven uses GroupId, ArtifactId and version to recognize correct dependency (GAV).

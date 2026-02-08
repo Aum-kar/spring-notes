@@ -1,0 +1,126 @@
+-----------------------------------------------------------------------------
+Understanding How Two Beans Talk (Constructor Injection – My Notes)
+-----------------------------------------------------------------------------
+
+Package:
+abyss.hadal.twilight
+
+-----------------------------------------------------------------------------
+Application Startup
+-----------------------------------------------------------------------------
+
+@SpringBootApplication
+public class TwilightApplication {
+
+    public static void main(String[] args) {
+
+        // Spring Boot application starts here
+        // Spring creates the ApplicationContext (IoC container)
+        ApplicationContext context =
+                SpringApplication.run(TwilightApplication.class, args);
+
+        // We ask Spring for the Car bean
+        Car corolla = context.getBean(Car.class);
+
+        // We call a method explicitly
+        corolla.run();
+    }
+}
+
+-----------------------------------------------------------------------------
+Car Bean
+-----------------------------------------------------------------------------
+
+@Component
+class Car {
+
+    public Car(Engine engine) {
+        /*
+        - Look how we haven't created object of Engine yet, we are able to run its method!
+        - Engine is a bean, we have defined it by @Component annotation.
+        - Spring was already created object during component scan, we are consuming it.
+        - Also, observe how passing Engine as parameter in Car() means we are consuming it.
+        - But if we write 'Engine engine;' in method/constructor body, it does nothing.
+         */
+
+        // Using the Engine bean passed by Spring
+        engine.start();
+    }
+
+    public void run() {
+        System.out.println("Car is running");
+    }
+}
+
+-----------------------------------------------------------------------------
+Engine Bean
+-----------------------------------------------------------------------------
+
+@Component
+class Engine {
+
+    public Engine() {
+        System.out.println("Installing engine");
+    }
+
+    @Component
+class Engine {
+
+    public Engine() {
+        System.out.println("Default engine constructor ran");
+    }
+
+    @Autowired
+    public Engine(@Value("${engine.horsepower}") int horsepower) {
+        /*
+        - The constructor here is accepting int parameter.
+        - But, spring can configure bean only by itself.
+        - So, there are two ways to pass other parameter:
+            1. Use @Value("data"). Define data in application.properties
+            2. Use @Configuration class, complex but scalable.
+        - We have used @Autowired to make this constructor selected.
+         */
+        System.out.println("Developing engine with " + horsepower + " HP");
+    }
+
+    public void start() {
+        System.out.println("Engine started");
+    }
+}
+
+    public void start() {
+        System.out.println("Engine started");
+    }
+}
+
+-----------------------------------------------------------------------------
+Key Personal Takeaway
+-----------------------------------------------------------------------------
+
+• Passing a parameter in the constructor means we are USING (consuming) the object.
+• Spring creates the bean first, then passes it to another bean that needs it.
+• Constructor parameters are how beans talk to each other.
+• Local variable declarations do nothing unless Spring injects them.
+
+-----------------------------------------------------------------------------
+Execution Flow (Observed)
+-----------------------------------------------------------------------------
+
+1. Spring Boot starts
+2. Component scan finds Engine and Car
+3. Engine bean is created first
+4. Car bean is created, Engine is passed into its constructor
+5. engine.start() runs
+6. main() retrieves Car and calls run()
+7. Application shuts down
+
+-----------------------------------------------------------------------------
+What if Bean has multiple Constructor()?
+-----------------------------------------------------------------------------
+
+• Multiple constructors → use @Autowired to choose one
+• Constructor parameters = things the bean needs
+• Constructor(Beans) → Bean injected automatically
+• Primitive values → injected using @Value("key")
+• Values come from application.properties
+• Use meaningful, namespaced keys (engine.horsepower)
