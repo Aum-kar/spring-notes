@@ -117,3 +117,79 @@ At first glance, a static class and a singleton-scoped Spring bean may look simi
 | Scope control        | Always global          | Configurable via scopes             |
 | AOP support          | Not possible         | Possible (transactions, logging)  |
 | Container management | Outside Spring         | Fully managed by Spring             |
+
+
+# Prototype-scope
+Prototype bean in Spring is a bean scope where a new instance is created every time the bean is requested from the Spring container.
+
+**Explanation:**
+Unlike singleton beans, prototype beans are created lazily and not shared. Spring creates a prototype bean only when it is requested (through dependency injection or `getBean()`), and after creation, **Spring does not manage its lifecycle**. Each consumer gets its own independent object.
+
+> In prototype scope, Spring creates a new bean instance on every request and does not manage it after creation.
+
+Consider the example below, This project has three beans:
+1. Harrier  – singleton scoped
+2. Compass  – prototype scoped
+3. Engine   – prototype scoped
+
+### Entrypoint
+
+```java
+@SpringBootApplication
+public class MidlightApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(MidlightApplication.class, args);
+    }
+}
+```
+
+### Singleton-scoped Bean
+
+- Spring eagerly creates singleton beans at application startup.
+- Therefore, Harrier is created during startup.
+- While creating Harrier, Spring also creates an Engine instance because Harrier depends on Engine.
+
+```java
+@Component
+class Harrier {
+    Engine engine;
+    public Harrier(Engine engine) {
+        this.engine = engine;
+        System.out.println("Harrier object created");
+    }
+
+    public void displayConfiguration() {
+        System.out.println("Vehicle Name: Tata Harrier");
+        engine.displayConfiguration();
+    }
+}
+```
+
+### Prototype-scoped Bean
+
+- Prototype beans (Compass and Engine) are created only when requested.
+- Since Compass is never requested, its object is not created.
+- Spring registers all beans, but instantiates prototype beans lazily.
+
+```java
+@Component
+@Scope("prototype")
+class Compass {
+    Engine engine;
+    public Compass(Engine engine) {
+        this.engine = engine;
+        System.out.println("Compass object created");
+    }
+}
+
+// -------------------------------------------------
+
+@Component
+@Scope("prototype")
+public class Engine {
+    public Engine() {
+        System.out.println("Engine object created");
+    }
+}
+```
