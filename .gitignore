@@ -12,3 +12,6 @@ target/
 
 # Logs
 *.log
+
+playground.java
+App.java
