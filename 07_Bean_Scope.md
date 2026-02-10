@@ -101,3 +101,19 @@ class Harrier {
 - The public sources of bean will be shared with the other two beans.
 - The properties we had set for `Engine` will be shared with both `Harrier` & `Compass` bean.
 - Try making Engine scope to prototype!
+
+## Singleton-scoped Bean vs Static Class
+
+At first glance, a static class and a singleton-scoped Spring bean may look similar because both provide a single shared instance. However, they are fundamentally different. Spring beans provide much more control over lifecycle, configuration, and behavior than static classes.
+
+> Static classes are JVM-managed globals, whereas Spring singleton beans are container-managed objects with lifecycle, dependency injection, and configurability.
+
+| Aspect               | Static class | Spring Singleton Bean               |
+| -------------------- | ---------------------- | ----------------------------------- |
+| Creation             | When class is loaded   | Managed by Spring container         |
+| Lifecycle            | Lives until JVM stops  | Controlled by Spring                |
+| Dependency Injection | Not supported        | Supported                         |
+| Testability          | Hard to mock           | Easy to mock/replace                |
+| Scope control        | Always global          | Configurable via scopes             |
+| AOP support          | Not possible         | Possible (transactions, logging)  |
+| Container management | Outside Spring         | Fully managed by Spring             |
