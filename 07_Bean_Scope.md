@@ -16,7 +16,7 @@ The default bean scope in Spring is **singleton**, meaning one instance per Spri
 4. Session
 5. Application
 
-## Example of Singleton
+## Singleton
 
 > In singleton scope, Spring creates one shared bean instance per container, whereas in prototype scope, a new instance is created every time the bean is requested.
 
@@ -25,7 +25,8 @@ The default bean scope in Spring is **singleton**, meaning one instance per Spri
 - `Harrier`, `Compass` and `Engine` are beans.
 - `Harrier` and `compass` are dependent on `Engine`.
 
-### Entrypoint of the Program
+### Example
+#### Entrypoint of the Program
 ```java
 @SpringBootApplication
 public class App {
@@ -46,7 +47,7 @@ public class App {
 }
 ```
 
-### Engine Bean
+#### Engine Bean
 ```java
 @Component
 //@Scope("prototype")
@@ -65,7 +66,7 @@ public class Engine {
 }
 ```
 
-### Dependent Beans
+#### Dependent Beans
 ```java
 @Component
 class Compass {
@@ -79,7 +80,8 @@ class Compass {
         engine.displayConfiguration();
     }
 }
-
+```
+```java
 @Component
 class Harrier {
     Engine engine;
@@ -102,7 +104,7 @@ class Harrier {
 - The properties we had set for `Engine` will be shared with both `Harrier` & `Compass` bean.
 - Try making Engine scope to prototype!
 
-## Singleton-scoped Bean vs Static Class
+### Singleton-scoped Bean vs Static Class
 
 At first glance, a static class and a singleton-scoped Spring bean may look similar because both provide a single shared instance. However, they are fundamentally different. Spring beans provide much more control over lifecycle, configuration, and behavior than static classes.
 
@@ -119,7 +121,7 @@ At first glance, a static class and a singleton-scoped Spring bean may look simi
 | Container management | Outside Spring         | Fully managed by Spring             |
 
 
-# Prototype-scope
+## Prototype-scope
 Prototype bean in Spring is a bean scope where a new instance is created every time the bean is requested from the Spring container.
 
 **Explanation:**
@@ -127,12 +129,14 @@ Unlike singleton beans, prototype beans are created lazily and not shared. Sprin
 
 > In prototype scope, Spring creates a new bean instance on every request and does not manage it after creation.
 
+### Example
+
 Consider the example below, This project has three beans:
 1. Harrier  – singleton scoped
 2. Compass  – prototype scoped
 3. Engine   – prototype scoped
 
-### Entrypoint
+#### Entrypoint
 
 ```java
 @SpringBootApplication
@@ -144,7 +148,7 @@ public class MidlightApplication {
 }
 ```
 
-### Singleton-scoped Bean
+#### Singleton-scoped Bean
 
 - Spring eagerly creates singleton beans at application startup.
 - Therefore, Harrier is created during startup.
@@ -166,7 +170,7 @@ class Harrier {
 }
 ```
 
-### Prototype-scoped Bean
+#### Prototype-scoped Bean
 
 - Prototype beans (Compass and Engine) are created only when requested.
 - Since Compass is never requested, its object is not created.
@@ -182,9 +186,8 @@ class Compass {
         System.out.println("Compass object created");
     }
 }
-
-// -------------------------------------------------
-
+```
+```java
 @Component
 @Scope("prototype")
 public class Engine {
@@ -193,3 +196,12 @@ public class Engine {
     }
 }
 ```
+
+## Request Scope
+A request-scoped bean is created once per HTTP request and destroyed when the request is completed
+
+## Session Scope
+One bean instance is created per HTTP session and is shared across all requests within that session.
+
+## Application Scope
+One bean instance is created for the entire web application and is shared across all users, sessions, and requests.
