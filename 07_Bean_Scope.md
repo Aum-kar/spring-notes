@@ -205,3 +205,13 @@ One bean instance is created per HTTP session and is shared across all requests 
 
 ## Application Scope
 One bean instance is created for the entire web application and is shared across all users, sessions, and requests.
+
+## How can I get multiple instances of Prototype bean inside Singleton bean?
+
+When a singleton depends directly on a prototype, It injects only one prototype instance at startup.
+
+> It is possible to inject a prototype bean into a singleton bean using ObjectProvider or @Lookup to get a new instance each time. However, prototype scope should be used carefully, and often simple object creation is a better design choice unless dependency injection is required.
+
+- If you want a new object every time, you must use:
+1. ObjectProvider `ObjectProvider<MyPrototypeBean> myBean;`
+2. or don't use spring beans, instead stick with normal class and create objects manually.
