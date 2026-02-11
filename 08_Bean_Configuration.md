@@ -62,7 +62,7 @@ public class SimpleComponent {
 Below is how we have configured our required bean.
 - We have used @Configuration annotation to make it config class.
 - We have used @Bean annotation to configure our bean.
-- `SimpleComponentConfiguration` is called as **bean factory method.**
+- `simpleComponent()` is called as **bean factory method.**
 
 ```java
 @Configuration
