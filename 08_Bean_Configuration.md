@@ -161,6 +161,8 @@ class Harrier {
 
 ## Annotation Based Configuration
 
+In annotation-based configuration, we can have multiple beans of the same class by defining multiple @Bean methods with different names. @Component alone creates only one bean per class
+
 ```java
 @Component
 class EngineProvider {
@@ -180,6 +182,7 @@ class EngineProvider {
 Above annotation based configuration is equivalent to
 
 ```java
+// Java based configuration
 @Configuration
 class EngineConfiguration {
     @Bean
