@@ -68,7 +68,7 @@ public class SimpleComponent {
 
 #### Configuration class
 
-Below is how we have configured our required bean.
+Below is how we have configured our required bean using Java based configuration and injecting them using Qualifier.
 
 - We have used @Configuration annotation to make it config class.
 - We have used @Bean annotation to configure our bean.
@@ -159,4 +159,37 @@ class Harrier {
 }
 ```
 
----
+## Annotation Based Configuration
+
+```java
+@Component
+class EngineProvider {
+
+    @Bean("compassEngine")
+    public Engine compassEngine() {
+        return new Engine(300, 4);
+    }
+
+    @Bean("harrierEngine")
+    public Engine harrierEngine() {
+        return new Engine(200, 2);
+    }
+}
+```
+
+Above annotation based configuration is equivalent to
+
+```java
+@Configuration
+class EngineConfiguration {
+    @Bean
+    public Engine compassEngine() {
+        return new Engine(300, 4);
+    }
+
+    @Bean
+    public Engine harrierEngine() {
+        return new Engine(200, 2);
+    }
+}
+```
