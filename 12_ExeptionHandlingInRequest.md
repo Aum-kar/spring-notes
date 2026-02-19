@@ -58,7 +58,10 @@ public class ProductRequest {
 }
 ```
 
-- In case if request fails to validate these constraints, it will throw an error before sending it to Service class.
+- If validation fails, Spring throws MethodArgumentNotValidException, and the controller method is never executed.
+
+> What if you annotate DTO class instances using @DecimalMin, @NotBlank, @Positive but does not set @Valid in controller before consuming request?  
+@Valid triggers spring to validate constraints. So if you don't specify @Valid, it will not trigger checking.
 
 ## Reference Packages
 
