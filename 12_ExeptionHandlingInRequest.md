@@ -1,6 +1,6 @@
 # Exception Handling in Requests
 
-## Validating Request
+## Validating Requests using Spring annotations
 
 ```txt
 REQUEST:    Client Request
@@ -34,7 +34,7 @@ public ResponseEntity<ProductResponse> addProduct(@Valid @RequestBody ProductReq
 
 - In above example, we have added @Valid tag before `productRequest`.
 - `productRequest` is a java class that maps and validates the request for `addProduct` controller.
-- In incoming request, we don't want 
+- In incoming request, we don't want
   - proudct names to  be empty,
   - product price not less than 0, and
   - product stock quantity should be positive.
@@ -56,8 +56,11 @@ public class ProductRequest {
 }
 ```
 
+- In case if request fails to validate these constraints, it will throw an error before sending it to Service class.
+
 ## Reference Packages
 
 ```java
-import jakarta.validation.constraints.**;
+jakarta.validation.Valid;
+jakarta.validation.constraints.*;
 ```
