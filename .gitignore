@@ -17,3 +17,6 @@ playground.java
 App.java
 
 *.html
+*.http
+
+/local
