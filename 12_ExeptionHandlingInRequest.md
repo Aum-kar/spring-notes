@@ -5,6 +5,8 @@
 ```txt
 REQUEST:    Client Request
 \/
+DTO:        Data Transfer Object, maps request json body to java class.
+\/
 CONTROLLER: Controller listens request
 \/
 VALIDATE:   Validate requests using @Valid while consuming in controller class
@@ -22,7 +24,7 @@ DATABASE
 
 Suppose an example of saving product to database
 It accepts requests in addProduct() controller
-Validates incoming request using spring `@Valid` annotations defined in `Product Entity`
+Validates incoming request using spring `@Valid` annotations defined in request object `ProductRequest` DTO.
 
 ```java
 @PostMapping
